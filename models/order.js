@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       order_details: {
         type: DataTypes.STRING,
       },
+      pool_id: {
+        type: DataTypes.STRING,
+      },
     },
     {
       sequelize,
