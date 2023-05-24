@@ -145,17 +145,17 @@ exports.signUp = (req, res, next) => {
             return user.save();
           })
           .then(async (result) => {
-            let emailResponse = await sendMail({
-              from: `${process.env.EMAIL}`, // sender address
-              to: req.body.email, // list of receivers
-              subject: "Verify Email", // Subject line
-              text: "reset email", // plain text body
-              html: `<b>Verify email at <a href=${process.env.VERIFY_URL}/verify?verificationToken=${result.verificationToken}>Click Here to verify Email</a></b>`, // html body
-            });
+            // let emailResponse = await sendMail({
+            //   from: `${process.env.EMAIL}`, // sender address
+            //   to: req.body.email, // list of receivers
+            //   subject: "Verify Email", // Subject line
+            //   text: "reset email", // plain text body
+            //   html: `<b>Verify email at <a href=${process.env.VERIFY_URL}/verify?verificationToken=${result.verificationToken}>Click Here to verify Email</a></b>`, // html body
+            // });
             return res.status(200).send({
               status: true,
               message: "User created succcessfully.",
-              testURI: emailResponse.testURI,
+              // testURI: emailResponse.testURI,
             });
           });
       } else {
