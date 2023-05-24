@@ -101,7 +101,7 @@ class Nicehash {
     this.request('POST', `/main/api/v2/hashpower/order/${orderId}/updatePriceAndLimit`, {}, body, cb)
   }
   getPools (size, page,algorithm, cb) {
-    this.request('GET', `/main/api/v2/pools?size=${size}&page=${page}&algorithm=${algorithm}`, null, cb)
+    this.request('GET', `/main/api/v2/pools?size=${size}&page=${page}&algorithm=${algorithm}`, cb)
   }
   createPool (body, cb) {
     this.request('POST', '/main/api/v2/pool', {}, body, cb)

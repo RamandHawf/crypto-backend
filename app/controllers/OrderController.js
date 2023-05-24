@@ -1,21 +1,15 @@
 // Create an order
 
 
+require('dotenv').config();
+
 const NicehashJS = require('../nicehash/niceHashTest');
 const nhClient = new NicehashJS(
 
-    "c3e7b159-e6dd-4f6b-ad81-9d998a1d7e5f"
 
-
-    , "e484297c-9e74-4a9c-ae9f-262de480ac53f882436e-cc6e-40a4-87f8-7cca57bda112"
-
-
-
-
-
-
-    , "485ed89e-a7bb-4d80-ba91-a36a3c4d84cc"
-
+  process.env.API_KEY,
+  process.env.API_SECRET,
+  process.env.ORGID,
 
 )
 exports.createOrder = async (req, res) => {

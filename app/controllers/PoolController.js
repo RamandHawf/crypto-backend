@@ -1,21 +1,22 @@
 // Create a pool
 
+require('dotenv').config();
 
 const NicehashJS = require('../nicehash/niceHashTest');
 const nhClient = new NicehashJS(
 
-    "c3e7b159-e6dd-4f6b-ad81-9d998a1d7e5f"
 
+  process.env.API_KEY,
+  process.env.API_SECRET,
+  process.env.ORGID,
 
-    , "e484297c-9e74-4a9c-ae9f-262de480ac53f882436e-cc6e-40a4-87f8-7cca57bda112"
+//     "9d1d264f-9fe5-4706-99f2-98c9a17c112e"
 
+// ,
+// "35486024-8be3-408b-bc60-2eea3ac79e2b7b2fa903-1317-4349-8e61-6c0c5a750771"
 
-
-
-
-
-    , "485ed89e-a7bb-4d80-ba91-a36a3c4d84cc"
-
+// ,
+// "485ed89e-a7bb-4d80-ba91-a36a3c4d84cc"
 
 )
 exports.createPool = async (req, res) => {
@@ -62,6 +63,8 @@ exports.createPool = async (req, res) => {
   // Get all pools
   exports.getPools = async (req, res) => {
     try {
+
+      
       const { Pool } = req.db.models;
       const pools = await Pool.findAll();
       res.status(200).json({ pools });
