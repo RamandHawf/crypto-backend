@@ -18,10 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       order_details: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       pool_id: {
-        type: DataTypes.STRING(65500),
+        type: DataTypes.STRING,
       },
     },
     {
