@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      order_details: {
-        type: DataTypes.STRING,
-      },
+      // order_details: {
+      //   type: DataTypes.STRING,
+      // },
       pool_id: {
         type: DataTypes.STRING,
       },
