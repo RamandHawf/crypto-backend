@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
     static associate(models) {
       Order.belongsTo(models.User, { foreignKey: 'user_id' });
-      Order.belongsTo(models.Pool, { foreignKey: 'pool_id' });
+      // Order.belongsTo(models.Pool, { foreignKey: 'pool_id' });
       Order.belongsTo(models.Package, { foreignKey: 'package_id' });
     }
   }
