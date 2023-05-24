@@ -13,6 +13,11 @@ router.post('/deletetransaction/:id', TransactonController.deleteTransaction);
 // router.get('/getalgorithm', TransactonController.getalgorithm);
 
 
+router.get('/metamasktransactiondata', TransactonController.getTransactionsFromMetamask);
+
+
+
+
 
 
 

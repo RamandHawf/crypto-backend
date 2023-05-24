@@ -31,12 +31,22 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      transactionDetail: {
+        type: DataTypes.STRING,
+        allowNull: true, // or false if it shouldn't be nullable
+      },
+      transactionHash: {
+        type: DataTypes.STRING,
+        allowNull: true, // or false if it shouldn't be nullable
+      },
     },
     {
       sequelize,
       modelName: 'Transaction',
     }
   );
+  
+  
 
   return Transaction;
 };

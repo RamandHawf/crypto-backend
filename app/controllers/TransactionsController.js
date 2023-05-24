@@ -1,16 +1,25 @@
+require('dotenv').config();
+const Web3 =  require("web3");
+const transactions = require('../../models/transactions');
+const web3 = new Web3(`https://goerli.infura.io/v3/${process.env.APIKEY}`);
+
 
 exports.createTransaction = async (req, res) => {
     // console.log(req.body)
+
+    let data= `https://mainnet.infura.io/v3/9992ea8e1df4426782245acd1d14989f`
     try {
     const { Transaction } = req.db.models;
     console.log(Transaction)
  
-    const { to, from ,userid,packageid} = req.body;
+    const { transactiondetail,transactionhash,to, from ,userid,packageid} = req.body;
 
     
     console.log("Name")
     Transaction.create({
 
+      transactionDetail : transactiondetail,
+      transactionHash : transactionhash,
         to:to,
         from:from,
         user_id:userid,
@@ -28,7 +37,7 @@ exports.createTransaction = async (req, res) => {
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: error });
-  }
+  }  
 };
 
 // Get all transactions
@@ -41,6 +50,33 @@ exports.getTransactions = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Unable to retrieve transactions' });
   }
+};
+
+
+exports.getTransactionsFromMetamask = async (req, res) => {
+
+  try {
+    // if (typeof req.query.address === 'undefined') {
+    //   return res.status(400).json({ error: 'Address parameter is missing' });
+    // }
+
+    const address = process.env.ADDRESS;
+    const transactionCount = await web3.eth.getTransactionCount(address);
+    console.log(transactionCount)
+    const transactions = [];
+
+    for (let i = 0; i < transactionCount; i++) {
+      const transaction = await web3.eth.getTransactionFromBlock('latest', i);
+      transactions.push(transaction);
+    }
+
+    res.json(transactions);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+
 };
 
 // Get a single transaction by ID

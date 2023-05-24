@@ -4,8 +4,11 @@ const env = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 var { expressjwt: jwt } = require("express-jwt");
+const cors = require('cors');
+
 
 const app = express();
+app.use(cors());
 
 //Loading Routes
 const webRoutes = require("./routes/web");
