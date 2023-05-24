@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       pool_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(65500),
       },
     },
     {

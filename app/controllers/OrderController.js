@@ -30,9 +30,9 @@ exports.createOrder = async (req, res) => {
             (
             {
             order_details : JSON.stringify(response.body),
-            pool_id : req.body.nicehash_orderdata.pool_id,
             user_id : user_id,
-            package_id : package_id
+            package_id : package_id,
+            pool_id : req.body.nicehash_orderdata.pool_id,
             }
             )
             .then((order) => {
