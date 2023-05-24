@@ -141,6 +141,7 @@ exports.signUp = (req, res, next) => {
               email: req.body.email,
               password: hashedPassword,
               verificationToken: token,
+              isVerified:1,
             });
             return user.save();
           })
