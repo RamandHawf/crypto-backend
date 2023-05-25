@@ -50,7 +50,7 @@ app.use(
       "/api/auth/forget-password",
       "/api/auth/verify",
       // "/api/transaction/gettransactionbyid/:id",
-      // "/api/money/create_transaction",
+      "/api/money/create_transaction",
       "/api/test",
       // "/api/order/create_order",
       // "/api/order/getorder",
