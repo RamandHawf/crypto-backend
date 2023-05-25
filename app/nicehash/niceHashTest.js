@@ -91,6 +91,9 @@ class Nicehash {
   getOrder (orderId, cb) {
     this.request('GET', `/main/api/v2/hashpower/order/${orderId}`, {}, undefined, cb)
   }
+  getpoolwithid (poolId, cb) {
+    this.request('GET', `/main/api/v2/pool/${poolId}`, {}, undefined, cb)
+  }
   deleteOrder (orderId, cb) {
     this.request('DELETE', `/main/api/v2/hashpower/order/${orderId}`, {}, undefined, cb)
   }

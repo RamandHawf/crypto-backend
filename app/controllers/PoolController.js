@@ -124,3 +124,15 @@ exports.createPool = async (req, res) => {
     }
   };
   
+
+  exports.getnicehashpooldatawithid = async (req,res)=>{
+    const {poolId} = req.query; 
+    nhClient.getpoolwithid (poolId, (err,resp)=>{
+      if(err){
+        res.status(400).send(err)
+      }else
+      {
+        res.status(200).send(resp)
+      }
+    })
+  }

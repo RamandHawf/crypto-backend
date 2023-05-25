@@ -17,4 +17,8 @@ router.put('/updatepool/:id', poolController.updatePool);
 // Delete a pool
 router.delete('/deletepool/:id', poolController.deletePool);
 
+router.get('/getnicehashpooldatawithid', poolController.getnicehashpooldatawithid);
+
+// getnicehashpooldatawithid
+
 module.exports = router;
