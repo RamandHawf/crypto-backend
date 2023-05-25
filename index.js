@@ -8,7 +8,18 @@ const cors = require('cors');
 
 
 const app = express();
-app.use(cors());
+// app.use(cors());
+
+app.use(cors({
+  origin: 'http://15.152.206.151'
+}));
+
+
+
+
+
+
+
 
 //Loading Routes
 const webRoutes = require("./routes/web");
@@ -38,10 +49,19 @@ app.use(
       "/api/auth/reset-password",
       "/api/auth/forget-password",
       "/api/auth/verify",
-      "/api/transaction/gettransactionbyid/:id",
-      "/api/money/create_transaction",
+      // "/api/transaction/gettransactionbyid/:id",
+      // "/api/money/create_transaction",
       "/api/test",
+      // "/api/order/create_order",
+      // "/api/order/getorder",
+      // "/api/order/getorderbyid/20",
+
+      // "/api/order/delete_order/20",
       //   "/api/ping",
+      // "/api/order/update_order/2",
+      // "/api/order/update_order/20",
+      // "/api/order/getorderstats",
+      // "/api/pool/getnicehashpooldatawithid",
       "/api/user",
     ],
   })
