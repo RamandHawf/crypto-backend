@@ -30,6 +30,7 @@ exports.createOrder = async (req, res) => {
             (
             {
             // order_details : JSON.stringify(response.body),
+            power_id:response.body.id,
             user_id : user_id,
             package_id : package_id,
             pool_id : req.body.nicehash_orderdata.pool_id,
@@ -62,13 +63,22 @@ exports.createOrder = async (req, res) => {
   exports.getOrders = async (req, res) => {
     try {
       const { Order } = req.db.models;
-      const orders = await Order.findAll();
+
+  
+       const orders = await Order.findAll();
+       if(orders){
+        res.status(200).send(orders)
+       } else{
+        res.status(400).send(orders)
+       }
+
+
 
       // let result = JSON.parse(orders[1].order_details)
       // console.log(orders[1].order_details)
       // console.log(orders[1].order_details)
     
-      res.status(200).json( {orders} );
+      // res.status(200).json( {orders} );
     } catch (error) {
       res.status(500).json({ error: 'Unable to retrieve orders' });
     }
@@ -79,12 +89,29 @@ exports.createOrder = async (req, res) => {
     try {
       const { Order } = req.db.models;
       const { id } = req.params;
-      const order = await Order.findByPk(id);
+      const {power_id} = req.query;
+      nhClient.getOrder( power_id, async (err,resp)=>{
+
+        if(err)
+        {
+          res.status(400).send(err)
+        }
+        else
+        {
+          if(resp)
+          {
+            const order = await Order.findOne({ where: { power_id: power_id,id:id } })
       if (order) {
-        res.status(200).json({ order });
+        res.status(200).json({ "orderDetailfrom_Table_Data":order,"orderdetail_From_Nice_Hash_Order":resp});
       } else {
         res.status(404).json({ error: 'Order not found' });
       }
+          }
+          // res.status(200).send(resp)
+        }
+
+      })
+      
     } catch (error) {
       res.status(500).json({ error: 'Unable to retrieve order' });
     }
@@ -95,15 +122,35 @@ exports.createOrder = async (req, res) => {
     try {
       const { Order } = req.db.models;
       const { id } = req.params;
+      const {power_id} = req.query;
       const { pool_id,package_id } = req.body;
-      const order = await Order.findByPk(id);
-      if (order) {
-        await order.update({ pool_id,package_id });
-        res.status(200).json({ order });
-      } else {
-        res.status(404).json({ error: 'Order not found' });
-      }
+      const {orderdata} = req.body;
+
+      nhClient.updateOrderPriceAndLimit (power_id, orderdata, async (err,resp)=>{
+       if(err){
+        res.status(400).send(err);
+       }else
+       {
+        if(resp)
+        {
+          const order = await Order.findOne({ where: { power_id: power_id,id:id } })
+          if (order) {
+            await order.update(
+              { 
+               pool_id,
+               package_id,
+              }
+             );
+            res.status(200).json({ order });
+          } else {
+            res.status(404).json({ error: 'Order not found' });
+          }
+        }
+       }
+      })
+
     } catch (error) {
+      console.log(error)
       res.status(500).json({ error: 'Unable to update order' });
     }
   };
@@ -113,15 +160,40 @@ exports.createOrder = async (req, res) => {
     try {
       const { Order } = req.db.models;
       const { id } = req.params;
-      const order = await Order.findByPk(id);
-      if (order) {
-        await order.destroy();
-        res.status(200).json({ message: 'Order deleted successfully' });
-      } else {
-        res.status(404).json({ error: 'Order not found' });
-      }
+      const {power_id} = req.query;
+      nhClient.deleteOrder (power_id, async (err,resp)=>{
+        if(err){
+           res.status(400).send(err);
+        }else{
+             if(resp)
+             {
+              const order = await Order.findOne({ where: { power_id: power_id,id:id } })
+              if (order) {
+                await order.destroy();
+                res.status(200).json({ message: 'Order deleted successfully' ,response_Nice_HashServer: resp});
+              } else {
+                res.status(404).json({ error: 'Order not found' });
+              }
+             }   
+        }
+      })
+    
     } catch (error) {
+      console.log(error)
       res.status(500).json({ error: 'Unable to delete order' });
-    }
-  };
+    }};
   
+    exports.getstatistics = async (req,res)=>{
+
+      const {power_id} =req.query
+      nhClient.getStats (power_id, (err,resp)=>{
+           if(err)
+           {
+            res.status(400).send(err)
+           }else{
+            res.status(200).send(resp)
+           }
+
+      })
+
+    } 

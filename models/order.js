@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       pool_id: {
         type: DataTypes.STRING,
       },
+      power_id: {
+        type: DataTypes.STRING,
+      },
+      
     },
     {
       sequelize,
