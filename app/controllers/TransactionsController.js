@@ -2,6 +2,7 @@ require('dotenv').config();
 const Web3 =  require("web3");
 const transactions = require('../../models/transactions');
 const web3 = new Web3(`https://goerli.infura.io/v3/${process.env.APIKEY}`);
+const axios = require("axios")
 
 
 exports.createTransaction = async (req, res) => {
@@ -56,24 +57,26 @@ exports.getTransactions = async (req, res) => {
 exports.getTransactionsFromMetamask = async (req, res) => {
 
   try {
-    // if (typeof req.query.address === 'undefined') {
-    //   return res.status(400).json({ error: 'Address parameter is missing' });
-    // }
 
+    const api_key = process.env.APIKEY
     const address = process.env.ADDRESS;
-    const transactionCount = await web3.eth.getTransactionCount(address);
-    console.log(transactionCount)
-    const transactions = [];
-
-    for (let i = 0; i < transactionCount; i++) {
-      const transaction = await web3.eth.getTransactionFromBlock('latest', i);
-      transactions.push(transaction);
-    }
-
-    res.json(transactions);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    const endpoint = process.env.URL_ETHERSCAN_GOERLI;
+    // console.log()
+    
+axios
+  .get(`${endpoint}/api?module=account&action=txlist&address=${address}&apiKey=${api_key}`)
+  .then(response => {
+    res.status(200).send(response.data.result);
+  })
+  .catch(error => {
+    // Handle the error
+    res.status(400).send(error);
+    // console.error(error);
+  });
+  }
+  catch(err)
+  {
+    res.status(500).send({err});
   }
 
 
