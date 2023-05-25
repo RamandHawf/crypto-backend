@@ -95,10 +95,10 @@ exports.createOrder = async (req, res) => {
     try {
       const { Order } = req.db.models;
       const { id } = req.params;
-      const { order_details } = req.body;
+      const { pool_id,package_id } = req.body;
       const order = await Order.findByPk(id);
       if (order) {
-        await order.update({ order_details });
+        await order.update({ pool_id,package_id });
         res.status(200).json({ order });
       } else {
         res.status(404).json({ error: 'Order not found' });
