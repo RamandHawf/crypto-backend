@@ -32,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       transactionDetail: {
-        type: DataTypes.STRING,
-        allowNull: true, // or false if it shouldn't be nullable
+        type: DataTypes.TEXT, // or DataTypes.JSON
+        allowNull: true, // Adjust the allowNull option based on your requirements
       },
       transactionHash: {
         type: DataTypes.STRING,
