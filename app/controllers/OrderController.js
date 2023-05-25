@@ -64,11 +64,11 @@ exports.createOrder = async (req, res) => {
       const { Order } = req.db.models;
       const orders = await Order.findAll();
 
-      let result = JSON.parse(orders[1].order_details)
+      // let result = JSON.parse(orders[1].order_details)
       // console.log(orders[1].order_details)
-      console.log(orders[1].order_details)
+      // console.log(orders[1].order_details)
     
-      res.status(200).json( {orders,result} );
+      res.status(200).json( {orders} );
     } catch (error) {
       res.status(500).json({ error: 'Unable to retrieve orders' });
     }
