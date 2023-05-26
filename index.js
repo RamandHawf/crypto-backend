@@ -52,6 +52,9 @@ app.use(
       // "/api/transaction/gettransactionbyid/:id",
       "/api/money/create_transaction",
       "/api/test",
+      // "/api/money/metamasktransactiondata",
+      // "/api/order/create_order",
+      // "/api/order/delete_order/21",
       // "/api/order/create_order",
       // "/api/order/getorder",
       // "/api/order/getorderbyid/20",
@@ -62,7 +65,6 @@ app.use(
       // "/api/order/update_order/20",
       // "/api/order/getorderstats",
       // "/api/pool/getnicehashpooldatawithid",
-      "/api/user",
     ],
   })
 );
