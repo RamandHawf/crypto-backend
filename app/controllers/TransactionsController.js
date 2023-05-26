@@ -1,7 +1,5 @@
 require('dotenv').config();
-const Web3 =  require("web3");
-const transactions = require('../../models/transactions');
-const web3 = new Web3(`https://goerli.infura.io/v3/${process.env.APIKEY}`);
+
 const axios = require("axios")
 
 
