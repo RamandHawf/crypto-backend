@@ -25,7 +25,7 @@ exports.createOrder = async (req, res) => {
             res.status(400).send({ message: err })
         }
         else {
-            if(response?.body){
+            if(response.body.id){
                 Order.create
             (
             {
@@ -44,9 +44,9 @@ exports.createOrder = async (req, res) => {
               res.status(400).json({ error: 'Failed to create order' });
             });
             }
-            else if(response.body.errors){
+            else if(response){
                 console.log("code")
-                res.send({ message: response.body });
+                res.send({ message: response });
 
             }
             
@@ -165,6 +165,7 @@ exports.createOrder = async (req, res) => {
         if(err){
            res.status(400).send(err);
         }else{
+          // console.log(resp)
              if(resp)
              {
               const order = await Order.findOne({ where: { power_id: power_id,id:id } })
