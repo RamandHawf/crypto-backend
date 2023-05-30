@@ -61,15 +61,35 @@ exports.createOrder = async (req, res) => {
   
   // Get all orders
   exports.getOrders = async (req, res) => {
+
+
     try {
       const { Order } = req.db.models;
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10; 
+      const totalCount = await Order.count();
+      const totalPages = Math.ceil(totalCount / limit);
+      const offset = (page - 1) * limit;
+       const orders = await Order.findAll(
+        {
+          offset,
+          limit,
+        }
 
-  
-       const orders = await Order.findAll();
+       );
+       const results = {
+        results: orders,
+        pagination: {
+          page,
+          limit,
+          totalCount,
+          totalPages,
+        },
+      };
        if(orders){
-        res.status(200).send(orders)
+        res.status(200).send(results)
        } else{
-        res.status(400).send(orders)
+        res.status(400).send(results)
        }
 
 

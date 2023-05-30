@@ -66,8 +66,29 @@ exports.createPool = async (req, res) => {
 
       
       const { Pool } = req.db.models;
-      const pools = await Pool.findAll();
-      res.status(200).json({ pools });
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10; 
+      const totalCount = await Pool.count();
+      const totalPages = Math.ceil(totalCount / limit);
+      const offset = (page - 1) * limit;
+      const pools = await Pool.findAll(
+        {
+          offset,
+          limit,
+        }
+
+      );
+
+      const results = {
+        results: pools,
+        pagination: {
+          page,
+          limit,
+          totalCount,
+          totalPages,
+        },
+      };
+      res.status(200).json({ results });
     } catch (error) {
       res.status(500).json({ error: 'Unable to retrieve pools' });
     }

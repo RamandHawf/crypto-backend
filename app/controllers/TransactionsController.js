@@ -43,9 +43,34 @@ exports.createTransaction = async (req, res) => {
 exports.getTransactions = async (req, res) => {
     const { Transaction } = req.db.models;
 
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+  
+
+
   try {
-    const transactions = await Transaction.findAll();
-    res.status(200).json({ transactions });
+
+    const totalCount = await Transaction.count();
+    const totalPages = Math.ceil(totalCount / limit);
+    const offset = (page - 1) * limit;
+    const transactions = await Transaction.findAll(
+      {
+        offset,
+        limit,
+      }
+    );
+
+    const results = {
+      results: transactions,
+      pagination: {
+        page,
+        limit,
+        totalCount,
+        totalPages,
+      },
+    };
+   
+    res.status(200).json({ results });
   } catch (error) {
     res.status(500).json({ error: 'Unable to retrieve transactions' });
   }
